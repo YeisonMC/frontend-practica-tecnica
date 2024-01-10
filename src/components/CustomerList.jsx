@@ -1,0 +1,139 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
+import Aos from "aos";
+import "aos/dist/aos.css";
+import { ThTable } from "./iu/ThTable";
+import { useCustomerListData } from "../hooks/useCustomerListData";
+
+export const CustomerList = () => {
+  useEffect(() => {
+    Aos.init();
+  }, []);
+
+  // const [customers, setCustomers] = useState([]);
+  // const [searchTerm, setSearchTerm] = useState("");
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const {
+    customers,
+    setCustomers,
+    searchTerm,
+    setSearchTerm,
+    filteredCustomers,
+  } = useCustomerListData();
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/rapimoney/allCustomersPruebas")
+  //     .then((response) => setCustomers(response.data))
+  //     .catch((error) => console.error("Error fetching customers:", error));
+  // }, []);
+
+  // const filteredCustomers = customers.filter((customer) =>
+  //   customer.nombres.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const visibleCustomers = filteredCustomers.slice(startIndex, endIndex);
+
+  return (
+    <>
+      <h1 className="text-2xl mb-1 font-semibold">Registro de clientes</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1>Clientes</h1>
+        <input
+          type="text"
+          placeholder="Buscar por nombre"
+          className="border border-gray-300 p-2  rounded-lg"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="mx-auto">
+        <div
+          data-aos="fade-left"
+          data-aos-anchor="#example-anchor"
+          data-aos-offset="500"
+          data-aos-duration="800"
+          className="relative overflow-x-auto shadow-md sm:rounded-lg"
+        >
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-white uppercase bg-[#007872]  dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <ThTable>id</ThTable>
+                <ThTable>nombres</ThTable>
+                <ThTable>dni</ThTable>
+                <ThTable>Editar</ThTable>
+                <ThTable>Eliminar</ThTable>
+              </tr>
+            </thead>
+            <tbody>
+              {visibleCustomers.map(
+                (customer) =>
+                  customer.nombres
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) && (
+                    <tr
+                      key={customer.id}
+                      className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                    >
+                      <td className="px-6 py-4">{customer.id}</td>
+                      <td className="px-6 py-4">{customer.nombres}</td>
+                      <td className="px-6 py-4">{customer.dni}</td>
+                      <td className="px-6 py-4">
+                        <button onClick={() => handleEditar(customer.id)}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-7 h-7 hover:text-[#198754] transition-transform transform hover:scale-105"
+                          >
+                            <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                            <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                          </svg>
+                        </button>
+                      </td>
+                      <td className="px-6 py-4">
+                        <button onClick={() => handleEliminar(customer.id)}>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            className="w-7 h-7 hover:text-[#BB2D3B] transition-transform transform hover:scale-105"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </button>
+                      </td>
+                    </tr>
+                  )
+              )}
+            </tbody>
+          </table>
+          <div className="flex justify-around items-center p-1">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="mr-2"
+            >
+              Anterior
+            </button>
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={endIndex >= filteredCustomers.length}
+            >
+              <p className="">Ver más</p>
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
