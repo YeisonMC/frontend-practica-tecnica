@@ -4,8 +4,14 @@ import Swal from "sweetalert2";
 
 const useCustomerForm = () => {
   const initialFormData = {
-    dni: "",
     nombres: "",
+    apellidos: "",
+    dni: "",
+    fecha_nacimiento: "",
+    celular: "",
+    correo: "",
+    banco: "",
+    numero_cci: "",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -20,7 +26,7 @@ const useCustomerForm = () => {
 
     try {
       await axios.post(
-        "http://localhost:3000/rapimoney/createcustomers",
+        "http://localhost:3000/rapimoney/createcustomer",
         formData
       );
 

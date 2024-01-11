@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { ThTable } from "./iu/ThTable";
 import { useCustomerListData } from "../hooks/useCustomerListData";
+import { TdTable } from "./iu/TdTable";
 
 export const CustomerList = () => {
   useEffect(() => {
     Aos.init();
   }, []);
-
-  // const [customers, setCustomers] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -23,17 +20,6 @@ export const CustomerList = () => {
     setSearchTerm,
     filteredCustomers,
   } = useCustomerListData();
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/rapimoney/allCustomersPruebas")
-  //     .then((response) => setCustomers(response.data))
-  //     .catch((error) => console.error("Error fetching customers:", error));
-  // }, []);
-
-  // const filteredCustomers = customers.filter((customer) =>
-  //   customer.nombres.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -47,7 +33,7 @@ export const CustomerList = () => {
         <input
           type="text"
           placeholder="Buscar por nombre"
-          className="border border-gray-300 p-2  rounded-lg"
+          className="border border-gray-300 p-2 rounded-lg"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -65,9 +51,15 @@ export const CustomerList = () => {
               <tr>
                 <ThTable>id</ThTable>
                 <ThTable>nombres</ThTable>
+                <ThTable>apellidos</ThTable>
                 <ThTable>dni</ThTable>
-                <ThTable>Editar</ThTable>
-                <ThTable>Eliminar</ThTable>
+                <ThTable>fecha_nacimiento</ThTable>
+                <ThTable>celular</ThTable>
+                <ThTable>correo</ThTable>
+                <ThTable>banco</ThTable>
+                <ThTable>número CCI</ThTable>
+                <ThTable>editar</ThTable>
+                <ThTable>eliminar</ThTable>
               </tr>
             </thead>
             <tbody>
@@ -80,9 +72,15 @@ export const CustomerList = () => {
                       key={customer.id}
                       className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
-                      <td className="px-6 py-4">{customer.id}</td>
-                      <td className="px-6 py-4">{customer.nombres}</td>
-                      <td className="px-6 py-4">{customer.dni}</td>
+                      <TdTable>{customer.id}</TdTable>
+                      <TdTable>{customer.nombres}</TdTable>
+                      <TdTable>{customer.apellidos}</TdTable>
+                      <TdTable>{customer.dni}</TdTable>
+                      <TdTable>{customer.fecha_nacimiento}</TdTable>
+                      <TdTable>{customer.celular}</TdTable>
+                      <TdTable>{customer.correo}</TdTable>
+                      <TdTable>{customer.banco}</TdTable>
+                      <TdTable>{customer.numero_cci}</TdTable>
                       <td className="px-6 py-4">
                         <button onClick={() => handleEditar(customer.id)}>
                           <svg

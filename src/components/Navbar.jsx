@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Hora } from "../components/iu/Hora";
 
 export const Navbar = () => {
@@ -35,7 +35,6 @@ export const Navbar = () => {
       >
         <div className="bg-[#007872] px-3 py-6 ">
           <img
-            className=""
             src="https://www.rapimoney.pe/wp-content/uploads/2023/07/logo-principal.png"
             alt="rapimoney"
           />
@@ -47,10 +46,10 @@ export const Navbar = () => {
         {/* <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800"> */}
         <div className="h-full overflow-y-auto bg-gray-50 dark:bg-gray-800">
           {/* <ul className="space-y-2 font-medium"> */}
-          <ul className=" font-medium">
+          <ul className="font-medium">
             <li>
               <NavLink
-                to="/"
+                to="/home"
                 className="flex items-center p-4 text-gray-900  dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group shadow-[rgba(0,_0,_0,_0.15)_0px_2px_5px]"
               >
                 <svg
@@ -92,10 +91,7 @@ export const Navbar = () => {
             </li>
 
             <li>
-              <NavLink
-                to="/segundo"
-                className="flex items-center p-4 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group shadow-[rgba(0,_0,_0,_0.15)_0px_2px_5px]"
-              >
+              <NavLink className="flex items-center p-4 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group shadow-[rgba(0,_0,_0,_0.15)_0px_2px_5px]">
                 <svg
                   className="mr-3 flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   aria-hidden="true"
@@ -121,7 +117,6 @@ export const Navbar = () => {
       <div className="px-4 mt-2 sm:ml-64">
         <div className="p-4  border-gray-200 border-dashed rounded-lg dark:border-gray-700 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_10px_10px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
           <div className="grid grid-cols-1 gap-4">
-            {/* <h1>Hora</h1> */}
             <Hora />
           </div>
         </div>

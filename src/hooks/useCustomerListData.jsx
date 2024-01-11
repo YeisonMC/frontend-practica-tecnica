@@ -7,7 +7,7 @@ export const useCustomerListData = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/rapimoney/allCustomersPruebas")
+      .get("http://localhost:3000/rapimoney/allCustomers")
       .then((response) => setCustomers(response.data))
       .catch((error) => console.error("Error fetching customers:", error));
   }, []);
