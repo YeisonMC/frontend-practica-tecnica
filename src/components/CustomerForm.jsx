@@ -117,13 +117,13 @@ export const CustomerForm = () => {
         </div>
 
         <div className="mb-5">
-          <Label htmlFor="numero_cci">CCI</Label>
+          <Label htmlFor="numero_cci">Número de CCI</Label>
           <Input
             type="text"
             id="numero_cci"
             name="numero_cci"
             value={formData.numero_cci}
-            placeholder="example@gmail.com"
+            placeholder="Ingrese número se CCI"
             maxLength={20}
             onChange={handleChange}
           />

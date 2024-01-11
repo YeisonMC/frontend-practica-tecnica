@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Aos from "aos";
+import axios from "axios";
+import Swal from "sweetalert2";
 import "aos/dist/aos.css";
 import { ThTable } from "./iu/ThTable";
 import { useCustomerListData } from "../hooks/useCustomerListData";
@@ -25,9 +27,53 @@ export const CustomerList = () => {
   const endIndex = startIndex + itemsPerPage;
   const visibleCustomers = filteredCustomers.slice(startIndex, endIndex);
 
+  // const handleEliminar = async (customerId) => {
+  //   try {
+  //     await axios.delete(
+  //       `http://localhost:3000/rapimoney/deletecustomer/${customerId}`
+  //     );
+
+  //     setCustomers(customers.filter((customer) => customer.id !== customerId));
+  //   } catch (error) {
+  //     console.error("Error al eliminar el cliente:", error);
+  //   }
+  // };
+
+  const handleEliminar = async (customerId) => {
+    try {
+      const result = await Swal.fire({
+        title: "¿Estás seguro?",
+        text: "No podrás revertir esto.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, eliminarlo",
+      });
+
+      if (result.isConfirmed) {
+        await axios.delete(
+          `http://localhost:3000/rapimoney/deletecustomer/${customerId}`
+        );
+
+        setCustomers(
+          customers.filter((customer) => customer.id !== customerId)
+        );
+
+        Swal.fire({
+          title: "¡Eliminado!",
+          text: "El cliente ha sido eliminado.",
+          icon: "success",
+        });
+      }
+    } catch (error) {
+      console.error("Error al eliminar el cliente:", error);
+    }
+  };
+
   return (
     <>
-      <h1 className="text-2xl mb-1 font-semibold">Registro de clientes</h1>
+      <h1 className="text-2xl mb-2 font-semibold">Registro de clientes</h1>
       <div className="flex justify-between items-center mb-4">
         <h1>Clientes</h1>
         <input
@@ -115,19 +161,47 @@ export const CustomerList = () => {
               )}
             </tbody>
           </table>
-          <div className="flex justify-around items-center p-1">
+          <div className="flex justify-between items-center p-2 mx-5">
             <button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="mr-2"
             >
-              Anterior
+              <div className="flex justify-center items-center py-1 px-2 bg-[#007872] rounded-xl text-white font-semibold">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.72 12.53a.75.75 0 0 1 0-1.06l7.5-7.5a.75.75 0 1 1 1.06 1.06L9.31 12l6.97 6.97a.75.75 0 1 1-1.06 1.06l-7.5-7.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                <p>Anterior </p>
+              </div>
             </button>
             <button
               onClick={() => setCurrentPage((prev) => prev + 1)}
               disabled={endIndex >= filteredCustomers.length}
             >
-              <p className="">Ver más</p>
+              <div className="flex justify-center items-center py-1 px-2 bg-[#007872] rounded-xl text-white font-semibold">
+                <p>Ver más</p>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M13.28 11.47a.75.75 0 0 1 0 1.06l-7.5 7.5a.75.75 0 0 1-1.06-1.06L11.69 12 4.72 5.03a.75.75 0 0 1 1.06-1.06l7.5 7.5Z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </div>
             </button>
           </div>
         </div>

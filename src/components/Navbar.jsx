@@ -49,7 +49,7 @@ export const Navbar = () => {
           <ul className="font-medium">
             <li>
               <NavLink
-                to="/home"
+                to="/"
                 className="flex items-center p-4 text-gray-900  dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group shadow-[rgba(0,_0,_0,_0.15)_0px_2px_5px]"
               >
                 <svg

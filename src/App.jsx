@@ -9,7 +9,7 @@ export const App = () => {
     <>
       <Navbar></Navbar>
       <Routes>
-        <Route path="/home" element={<Home />}></Route>
+        <Route path="/" element={<Home />}></Route>
         <Route path="/customerform" element={<CreateCustomerForm />}></Route>
       </Routes>
     </>
