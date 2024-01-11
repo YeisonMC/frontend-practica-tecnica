@@ -36,8 +36,14 @@ const useCustomerForm = () => {
         showConfirmButton: true,
       });
       setFormData({
-        dni: "",
         nombres: "",
+        apellidos: "",
+        dni: "",
+        fecha_nacimiento: "",
+        celular: "",
+        correo: "",
+        banco: "",
+        numero_cci: "",
       });
     } catch (error) {
       console.error("Error al crear el cliente:", error);
