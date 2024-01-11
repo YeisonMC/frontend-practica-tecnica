@@ -68,6 +68,11 @@ export const CustomerList = () => {
       }
     } catch (error) {
       console.error("Error al eliminar el cliente:", error);
+      Swal.fire({
+        title: "Error",
+        text: "Se produjo un error al intentar eliminar el cliente.",
+        icon: "error",
+      });
     }
   };
 
