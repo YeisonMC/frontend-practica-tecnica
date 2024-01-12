@@ -27,18 +27,6 @@ export const CustomerList = () => {
   const endIndex = startIndex + itemsPerPage;
   const visibleCustomers = filteredCustomers.slice(startIndex, endIndex);
 
-  // const handleEliminar = async (customerId) => {
-  //   try {
-  //     await axios.delete(
-  //       `http://localhost:3000/rapimoney/deletecustomer/${customerId}`
-  //     );
-
-  //     setCustomers(customers.filter((customer) => customer.id !== customerId));
-  //   } catch (error) {
-  //     console.error("Error al eliminar el cliente:", error);
-  //   }
-  // };
-
   const handleEliminar = async (customerId) => {
     try {
       const result = await Swal.fire({
